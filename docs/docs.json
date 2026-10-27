@@ -1,0 +1,155 @@
+{
+ "start": "docs/SETUP-WALKTHROUGH.md",
+ "sections": [
+  {
+   "title": "Start here",
+   "docs": [
+    {
+     "path": "docs/SETUP-WALKTHROUGH.md",
+     "title": "Setting up the app from scratch",
+     "desc": "Setting up from scratch with screenshots from the app's own test: the RunPod keys (API, SSH, registry login, S3), Default Configuration, a network volume, a pod, and what each failure means."
+    },
+    {
+     "path": "docs/QUICKSTART.md",
+     "title": "Quick Start - See ComfyUI Working",
+     "desc": "Three ways to see ComfyUI working in minutes: the RunPod dashboard, a local install, or a real RunPod pod. Comparison and recommended path."
+    },
+    {
+     "path": "docs/SETUP.md",
+     "title": "Setup Guide - On-Demand Pod",
+     "desc": "Deploying an on-demand RunPod pod: prerequisites, GPU choice, deployment steps, wiring the comfy CLI to it, cost tracking, pod management. Not done yet; status and the CANALV2 plan are in NEXT-STEPS.md."
+    },
+    {
+     "path": "docs/LOCAL-SETUP.md",
+     "title": "Local ComfyUI Setup",
+     "desc": "Running ComfyUI on your own machine instead of RunPod: options, hardware, speed comparison, model handling, switching between local and cloud. The current local install is apps/comfy-app."
+    },
+    {
+     "path": "docs/WORKFLOWS.md",
+     "title": "Workflows Guide",
+     "desc": "How workflows are organised in the comfy CLI project format: fragments, blueprints, composing, versioning, testing, best practices."
+    }
+   ]
+  },
+  {
+   "title": "Architecture and decisions",
+   "docs": [
+    {
+     "path": "docs/ARCHITECTURE.md",
+     "title": "ComfyUI MOE Architecture",
+     "desc": "The full picture of the pod orchestration stack: the three-layer design (Claude Code → MCP server → pool manager → RunPod), components, data flows, auth, deployment scenarios, scaling."
+    },
+    {
+     "path": "docs/ADR-001-runpod-strategy.md",
+     "title": "ADR-001 · RunPod Deployment Strategy - Hybrid Serverless + On-Demand",
+     "desc": "Why a hybrid of on-demand pods (development now) and serverless endpoints (batch rendering later), with trade-offs and migration path."
+    },
+    {
+     "path": "docs/ADR-002-moe-agent-pool.md",
+     "title": "ADR-002 · Mixture of Experts (MOE) Agent Pool Infrastructure",
+     "desc": "The \"mixture of experts\" agent pool: a pool of RunPod pods shared by several users and agents, with implementation plan, costs, quotas, credentials and rollout."
+    },
+    {
+     "path": "docs/ADR-003-python-mcp-vs-terraform.md",
+     "title": "ADR-003 · Python + MCP vs. Terraform for POD Orchestration",
+     "desc": "Why pod orchestration is Python plus an MCP server rather than Terraform, alternatives considered, and when to revisit."
+    },
+    {
+     "path": "docs/ADR-006-image-registry-and-ci-build.md",
+     "title": "ADR-006 · The ComfyUI image is built on CI next to a private registry; workflows ride on the volume",
+     "desc": "The ComfyUI image lives in a private GitLab registry and is built and pushed on GitLab CI next to it (the 3 GB torch layer never leaves the Mac); pods pull with a saved credential; workflows ride on the volume, seeded from the image only while empty; sshd in the image for the sync. Accepted 2026-10-20."
+    },
+    {
+     "path": "docs/ADR-007-volume-as-hub-and-sync.md",
+     "title": "ADR-007 · How local state and the pod's volume stay in line",
+     "desc": "How local state and the pod's volume stay in line: the per-folder contract (who writes where), the options from \"add Pull to the script\" through \"Push and Pull in the app\" to \"a bucket as the hub\", a recommendation, and the decision left open. Proposed 2026-10-20, no decision yet."
+    },
+    {
+     "path": "docs/ADR-009-adapter-studio.md",
+     "title": "ADR-009 · The Adapter Studio: chat builds a prompt, the prompt builds the adapter",
+     "desc": "The Adapter Studio: one IDE-style modal for Edit, New adapter and Write an adapter with Claude: code and prompt tabs, Code / Preview / Split icon buttons, the package as a tree with a file viewer, Claude's chat that builds an editable prompt which builds the adapter, built-ins editable by override, naming, documentation as a rule on generation, agentic validation on save, no autosave. Built 2026-10-24."
+    },
+    {
+     "path": "docs/ADR-010-the-app-is-always-named.md",
+     "title": "ADR-010 · A screen always says which app it is in",
+     "desc": "A full-screen screen always carries the app's mark and name (and the no-spend badge) in its header. Accepted 2026-10-24."
+    },
+    {
+     "path": "docs/ADR-011-what-a-sync-carries.md",
+     "title": "ADR-011 · What a sync carries, and what it does with what is already there",
+     "desc": "What a sync carries: which ComfyUI-Shared folders go and come back, skipping renders and the test bucket, what to do with files already on the pod, the skipped counter."
+    },
+    {
+     "path": "docs/ADR-012-versioned-releases.md",
+     "title": "ADR-012 · the app is released by version",
+     "desc": "The app is released by semantic version (patch unless Lucas names one), tagged vX.Y.Z, installers on the public downloads repo's Releases. Accepted 2026-10-27."
+    },
+    {
+     "path": "docs/ADR-014-documentation-site.md",
+     "title": "ADR-014 · the documentation is a public site built from the README",
+     "desc": "The documentation is a public Pages site built from this section: the README is the navigation, client-job docs are left out by a list, the setup walkthrough's screenshots come from a test. Accepted 2026-10-27."
+    },
+    {
+     "path": "docs/ADR-013-delivery.md",
+     "title": "ADR-013 · how the app is delivered",
+     "desc": "How the app is delivered: one Pages site, a button per platform (dmg, exe, Linux), versioned files with stable aliases, unsigned for now. Accepted 2026-10-27."
+    },
+    {
+     "path": "docs/DOCKERFILE-DEVIATIONS.md",
+     "title": "Dockerfile Deviations from Official RunPod/ComfyUI",
+     "desc": "Review of the original placeholder image (community ashleykza/comfyui base) against RunPod's official one. That placeholder is retired; the current image is apps/comfy-app/Dockerfile, built on pytorch/pytorch with the same pins as the Mac."
+    }
+   ]
+  },
+  {
+   "title": "Running and operating",
+   "docs": [
+    {
+     "path": "docs/MCP-ENDPOINTS.md",
+     "title": "The two MCP endpoints",
+     "desc": "The two MCP endpoints tool by tool: the pod manager (pool, pods, volumes, configuration, sync, cost; named yes where it spends) and the ComfyUI bridge (a local agent inside the ComfyUI of a pod: workflows, nodes, queue, history, outputs; refuses locked shots), the client connectors (Claude Code, Claude Desktop, Codex CLI, ChatGPT over HTTP) and the Connect › MCP tab."
+    },
+    {
+     "path": "docs/COMFY-API.md",
+     "title": "The ComfyUI API, as this repo uses it",
+     "desc": "The ComfyUI HTTP API as this repo uses it: health and readiness, the Workflows panel's userdata calls, queueing a graph, queue and history, the two graph formats, and which of our files call what."
+    },
+    {
+     "path": "infra/README.md",
+     "title": "Infrastructure Setup",
+     "desc": "The infrastructure folder: the pod lifecycle CLI, pod config, where the Docker image and the API live, cost management, monitoring, troubleshooting."
+    },
+    {
+     "path": "docs/MCP-SERVER.md",
+     "title": "MCP Server: ComfyUI Agent Pool Control",
+     "desc": "The MCP server that exposes agent pool management to Claude Code: quick start, every tool, typical sessions, configuration, errors, budgeting."
+    },
+    {
+     "path": "apps/comfy-app/README.md",
+     "title": "apps/comfy-app",
+     "desc": "The ComfyUI server project: what is upstream and what is ours (check.sh), running from a fresh clone, the Docker image, pointing the comfy CLI at it, targets and open approvals."
+    },
+    {
+     "path": "apps/runpod-dashboard/README.md",
+     "title": "RunPod dashboard (`apps/runpod-dashboard`)",
+     "desc": "The Vue dashboard for the pod manager: features, architecture, API integration, dev and production builds, the Electron desktop app."
+    },
+    {
+     "path": "apps/runpod-dashboard/COMPONENTS.md",
+     "title": "Frontend — components and styling",
+     "desc": "Component-by-component reference for the dashboard UI, styling conventions and the Electron packaging."
+    }
+   ]
+  },
+  {
+   "title": "Testing",
+   "docs": [
+    {
+     "path": "docs/TESTING.md",
+     "title": "Testing",
+     "desc": "The app's tests: the core suite (Vitest), the browser suite against a fake API (Playwright), the Electron suite in no-spend mode, the live RunPod proof, the MCP and CLI tests; what each covers and how to run them."
+    }
+   ]
+  }
+ ]
+}
